@@ -1,0 +1,106 @@
+endpoint,comparison,group_1,group_2,difference,SE,CI95_low,CI95_high,z,p_tukey,significance
+Total distance (mm),DMSO - Control,DMSO,Control,678.1367,640.2171,-576.6888,1932.9621,1.0592,0.8974,ns
+Total distance (mm),Tween80 - Control,Tween80,Control,-855.6667,640.2171,-2110.4921,399.1588,-1.3365,0.7646,ns
+Total distance (mm),MP - Control,MP,Control,763.935,640.2171,-490.8905,2018.7605,1.1932,0.8403,ns
+Total distance (mm),TCS - Control,TCS,Control,-206.465,640.2171,-1461.2905,1048.3605,-0.3225,0.9995,ns
+Total distance (mm),MP+TCS - Control,MP+TCS,Control,-663.9033,640.2171,-1918.7288,590.9221,-1.037,0.9055,ns
+Total distance (mm),Tween80 - DMSO,Tween80,DMSO,-1533.8033,640.2171,-2788.6288,-278.9779,-2.3958,0.1577,ns
+Total distance (mm),MP - DMSO,MP,DMSO,85.7983,640.2171,-1169.0271,1340.6238,0.134,1.0,ns
+Total distance (mm),TCS - DMSO,TCS,DMSO,-884.6017,640.2171,-2139.4271,370.2238,-1.3817,0.7381,ns
+Total distance (mm),MP+TCS - DMSO,MP+TCS,DMSO,-1342.04,640.2171,-2596.8655,-87.2145,-2.0962,0.2892,ns
+Total distance (mm),MP - Tween80,MP,Tween80,1619.6017,640.2171,364.7762,2874.4271,2.5298,0.1156,ns
+Total distance (mm),TCS - Tween80,TCS,Tween80,649.2017,640.2171,-605.6238,1904.0271,1.014,0.9134,ns
+Total distance (mm),MP+TCS - Tween80,MP+TCS,Tween80,191.7633,640.2171,-1063.0621,1446.5888,0.2995,0.9997,ns
+Total distance (mm),TCS - MP,TCS,MP,-970.4,640.2171,-2225.2255,284.4255,-1.5157,0.6541,ns
+Total distance (mm),MP+TCS - MP,MP+TCS,MP,-1427.8383,640.2171,-2682.6638,-173.0129,-2.2302,0.2239,ns
+Total distance (mm),MP+TCS - TCS,MP+TCS,TCS,-457.4383,640.2171,-1712.2638,797.3871,-0.7145,0.9803,ns
+Mean speed (mm s-1),DMSO - Control,DMSO,Control,3.8222,3.4762,-2.9912,10.6355,1.0995,0.8818,ns
+Mean speed (mm s-1),Tween80 - Control,Tween80,Control,-5.662,3.4762,-12.4754,1.1514,-1.6288,0.5794,ns
+Mean speed (mm s-1),MP - Control,MP,Control,2.0438,3.4762,-4.7695,8.8572,0.5879,0.9919,ns
+Mean speed (mm s-1),TCS - Control,TCS,Control,-2.2837,3.4762,-9.097,4.5297,-0.6569,0.9865,ns
+Mean speed (mm s-1),MP+TCS - Control,MP+TCS,Control,-4.8873,3.4762,-11.7007,1.926,-1.4059,0.7235,ns
+Mean speed (mm s-1),Tween80 - DMSO,Tween80,DMSO,-9.4842,3.4762,-16.2975,-2.6708,-2.7283,0.0698,ns
+Mean speed (mm s-1),MP - DMSO,MP,DMSO,-1.7783,3.4762,-8.5917,5.035,-0.5116,0.9958,ns
+Mean speed (mm s-1),TCS - DMSO,TCS,DMSO,-6.1058,3.4762,-12.9192,0.7075,-1.7565,0.4943,ns
+Mean speed (mm s-1),MP+TCS - DMSO,MP+TCS,DMSO,-8.7095,3.4762,-15.5229,-1.8961,-2.5055,0.1225,ns
+Mean speed (mm s-1),MP - Tween80,MP,Tween80,7.7058,3.4762,0.8925,14.5192,2.2167,0.23,ns
+Mean speed (mm s-1),TCS - Tween80,TCS,Tween80,3.3783,3.4762,-3.435,10.1917,0.9718,0.9269,ns
+Mean speed (mm s-1),MP+TCS - Tween80,MP+TCS,Tween80,0.7747,3.4762,-6.0387,7.588,0.2228,0.9999,ns
+Mean speed (mm s-1),TCS - MP,TCS,MP,-4.3275,3.4762,-11.1409,2.4859,-1.2449,0.8146,ns
+Mean speed (mm s-1),MP+TCS - MP,MP+TCS,MP,-6.9312,3.4762,-13.7445,-0.1178,-1.9939,0.3458,ns
+Mean speed (mm s-1),MP+TCS - TCS,MP+TCS,TCS,-2.6037,3.4762,-9.417,4.2097,-0.749,0.9757,ns
+Time active (%),DMSO - Control,DMSO,Control,6.9183,8.5451,-9.8301,23.6667,0.8096,0.9659,ns
+Time active (%),Tween80 - Control,Tween80,Control,-21.03,8.5451,-37.7784,-4.2816,-2.4611,0.1359,ns
+Time active (%),MP - Control,MP,Control,10.7367,8.5451,-6.0117,27.4851,1.2565,0.8086,ns
+Time active (%),TCS - Control,TCS,Control,-5.6617,8.5451,-22.4101,11.0867,-0.6626,0.9859,ns
+Time active (%),MP+TCS - Control,MP+TCS,Control,-4.075,8.5451,-20.8234,12.6734,-0.4769,0.997,ns
+Time active (%),Tween80 - DMSO,Tween80,DMSO,-27.9483,8.5451,-44.6967,-11.1999,-3.2707,0.0137,*
+Time active (%),MP - DMSO,MP,DMSO,3.8183,8.5451,-12.9301,20.5667,0.4468,0.9978,ns
+Time active (%),TCS - DMSO,TCS,DMSO,-12.58,8.5451,-29.3284,4.1684,-1.4722,0.6821,ns
+Time active (%),MP+TCS - DMSO,MP+TCS,DMSO,-10.9933,8.5451,-27.7417,5.7551,-1.2865,0.7926,ns
+Time active (%),MP - Tween80,MP,Tween80,31.7667,8.5451,15.0183,48.5151,3.7175,0.0028,**
+Time active (%),TCS - Tween80,TCS,Tween80,15.3683,8.5451,-1.3801,32.1167,1.7985,0.4667,ns
+Time active (%),MP+TCS - Tween80,MP+TCS,Tween80,16.955,8.5451,0.2066,33.7034,1.9842,0.3514,ns
+Time active (%),TCS - MP,TCS,MP,-16.3983,8.5451,-33.1467,0.3501,-1.919,0.3904,ns
+Time active (%),MP+TCS - MP,MP+TCS,MP,-14.8117,8.5451,-31.5601,1.9367,-1.7334,0.5096,ns
+Time active (%),MP+TCS - TCS,MP+TCS,TCS,1.5867,8.5451,-15.1617,18.3351,0.1857,1.0,ns
+Movement bouts (n),DMSO - Control,DMSO,Control,-27.8333,23.9448,-74.7652,19.0985,-1.1624,0.8547,ns
+Movement bouts (n),Tween80 - Control,Tween80,Control,-9.1667,23.9448,-56.0985,37.7652,-0.3828,0.9989,ns
+Movement bouts (n),MP - Control,MP,Control,33.0,23.9448,-13.9318,79.9318,1.3782,0.7403,ns
+Movement bouts (n),TCS - Control,TCS,Control,11.3333,23.9448,-35.5985,58.2652,0.4733,0.9971,ns
+Movement bouts (n),MP+TCS - Control,MP+TCS,Control,81.1667,23.9448,34.2348,128.0985,3.3897,0.0092,**
+Movement bouts (n),Tween80 - DMSO,Tween80,DMSO,18.6667,23.9448,-28.2652,65.5985,0.7796,0.971,ns
+Movement bouts (n),MP - DMSO,MP,DMSO,60.8333,23.9448,13.9015,107.7652,2.5406,0.1126,ns
+Movement bouts (n),TCS - DMSO,TCS,DMSO,39.1667,23.9448,-7.7652,86.0985,1.6357,0.5747,ns
+Movement bouts (n),MP+TCS - DMSO,MP+TCS,DMSO,109.0,23.9448,62.0682,155.9318,4.5521,0.0001,***
+Movement bouts (n),MP - Tween80,MP,Tween80,42.1667,23.9448,-4.7652,89.0985,1.761,0.4913,ns
+Movement bouts (n),TCS - Tween80,TCS,Tween80,20.5,23.9448,-26.4318,67.4318,0.8561,0.9567,ns
+Movement bouts (n),MP+TCS - Tween80,MP+TCS,Tween80,90.3333,23.9448,43.4015,137.2652,3.7726,0.0022,**
+Movement bouts (n),TCS - MP,TCS,MP,-21.6667,23.9448,-68.5985,25.2652,-0.9049,0.9454,ns
+Movement bouts (n),MP+TCS - MP,MP+TCS,MP,48.1667,23.9448,1.2348,95.0985,2.0116,0.3356,ns
+Movement bouts (n),MP+TCS - TCS,MP+TCS,TCS,69.8333,23.9448,22.9015,116.7652,2.9164,0.0414,*
+Time in outer zone (%),DMSO - Control,DMSO,Control,0.9917,8.084,-14.853,16.8363,0.1227,1.0,ns
+Time in outer zone (%),Tween80 - Control,Tween80,Control,-5.1833,8.084,-21.028,10.6613,-0.6412,0.9879,ns
+Time in outer zone (%),MP - Control,MP,Control,3.8583,8.084,-11.9863,19.703,0.4773,0.9969,ns
+Time in outer zone (%),TCS - Control,TCS,Control,-4.19,8.084,-20.0346,11.6546,-0.5183,0.9955,ns
+Time in outer zone (%),MP+TCS - Control,MP+TCS,Control,7.345,8.084,-8.4996,23.1896,0.9086,0.9445,ns
+Time in outer zone (%),Tween80 - DMSO,Tween80,DMSO,-6.175,8.084,-22.0196,9.6696,-0.7639,0.9735,ns
+Time in outer zone (%),MP - DMSO,MP,DMSO,2.8667,8.084,-12.978,18.7113,0.3546,0.9993,ns
+Time in outer zone (%),TCS - DMSO,TCS,DMSO,-5.1817,8.084,-21.0263,10.663,-0.641,0.9879,ns
+Time in outer zone (%),MP+TCS - DMSO,MP+TCS,DMSO,6.3533,8.084,-9.4913,22.198,0.7859,0.97,ns
+Time in outer zone (%),MP - Tween80,MP,Tween80,9.0417,8.084,-6.803,24.8863,1.1185,0.8739,ns
+Time in outer zone (%),TCS - Tween80,TCS,Tween80,0.9933,8.084,-14.8513,16.838,0.1229,1.0,ns
+Time in outer zone (%),MP+TCS - Tween80,MP+TCS,Tween80,12.5283,8.084,-3.3163,28.373,1.5498,0.6318,ns
+Time in outer zone (%),TCS - MP,TCS,MP,-8.0483,8.084,-23.893,7.7963,-0.9956,0.9195,ns
+Time in outer zone (%),MP+TCS - MP,MP+TCS,MP,3.4867,8.084,-12.358,19.3313,0.4313,0.9981,ns
+Time in outer zone (%),MP+TCS - TCS,MP+TCS,TCS,11.535,8.084,-4.3096,27.3796,1.4269,0.7106,ns
+Speed when active (mm s-1),DMSO - Control,DMSO,Control,2.4688,3.2423,-3.886,8.8237,0.7615,0.9739,ns
+Speed when active (mm s-1),Tween80 - Control,Tween80,Control,-2.853,3.2423,-9.2079,3.5019,-0.8799,0.9514,ns
+Speed when active (mm s-1),MP - Control,MP,Control,0.2308,3.2423,-6.124,6.5857,0.0712,1.0,ns
+Speed when active (mm s-1),TCS - Control,TCS,Control,-2.2625,3.2423,-8.6174,4.0924,-0.6978,0.9822,ns
+Speed when active (mm s-1),MP+TCS - Control,MP+TCS,Control,-6.3735,3.2423,-12.7284,-0.0186,-1.9658,0.3623,ns
+Speed when active (mm s-1),Tween80 - DMSO,Tween80,DMSO,-5.3218,3.2423,-11.6767,1.033,-1.6414,0.5709,ns
+Speed when active (mm s-1),MP - DMSO,MP,DMSO,-2.238,3.2423,-8.5929,4.1169,-0.6903,0.9831,ns
+Speed when active (mm s-1),TCS - DMSO,TCS,DMSO,-4.7313,3.2423,-11.0862,1.6235,-1.4593,0.6904,ns
+Speed when active (mm s-1),MP+TCS - DMSO,MP+TCS,DMSO,-8.8423,3.2423,-15.1972,-2.4875,-2.7272,0.0701,ns
+Speed when active (mm s-1),MP - Tween80,MP,Tween80,3.0838,3.2423,-3.271,9.4387,0.9511,0.933,ns
+Speed when active (mm s-1),TCS - Tween80,TCS,Tween80,0.5905,3.2423,-5.7644,6.9454,0.1821,1.0,ns
+Speed when active (mm s-1),MP+TCS - Tween80,MP+TCS,Tween80,-3.5205,3.2423,-9.8754,2.8344,-1.0858,0.8872,ns
+Speed when active (mm s-1),TCS - MP,TCS,MP,-2.4933,3.2423,-8.8482,3.8615,-0.769,0.9727,ns
+Speed when active (mm s-1),MP+TCS - MP,MP+TCS,MP,-6.6043,3.2423,-12.9592,-0.2495,-2.0369,0.3213,ns
+Speed when active (mm s-1),MP+TCS - TCS,MP+TCS,TCS,-4.111,3.2423,-10.4659,2.2439,-1.2679,0.8026,ns
+Maximum speed (mm s-1),DMSO - Control,DMSO,Control,2.2517,24.2755,-45.3282,49.8316,0.0928,1.0,ns
+Maximum speed (mm s-1),Tween80 - Control,Tween80,Control,27.1317,24.2755,-20.4482,74.7116,1.1177,0.8743,ns
+Maximum speed (mm s-1),MP - Control,MP,Control,22.5383,24.2755,-25.0416,70.1182,0.9284,0.9393,ns
+Maximum speed (mm s-1),TCS - Control,TCS,Control,28.9183,24.2755,-18.6616,76.4982,1.1913,0.8413,ns
+Maximum speed (mm s-1),MP+TCS - Control,MP+TCS,Control,7.2483,24.2755,-40.3316,54.8282,0.2986,0.9997,ns
+Maximum speed (mm s-1),Tween80 - DMSO,Tween80,DMSO,24.88,24.2755,-22.6999,72.4599,1.0249,0.9097,ns
+Maximum speed (mm s-1),MP - DMSO,MP,DMSO,20.2867,24.2755,-27.2932,67.8666,0.8357,0.9609,ns
+Maximum speed (mm s-1),TCS - DMSO,TCS,DMSO,26.6667,24.2755,-20.9132,74.2466,1.0985,0.8822,ns
+Maximum speed (mm s-1),MP+TCS - DMSO,MP+TCS,DMSO,4.9967,24.2755,-42.5832,52.5766,0.2058,0.9999,ns
+Maximum speed (mm s-1),MP - Tween80,MP,Tween80,-4.5933,24.2755,-52.1732,42.9866,-0.1892,1.0,ns
+Maximum speed (mm s-1),TCS - Tween80,TCS,Tween80,1.7867,24.2755,-45.7932,49.3666,0.0736,1.0,ns
+Maximum speed (mm s-1),MP+TCS - Tween80,MP+TCS,Tween80,-19.8833,24.2755,-67.4632,27.6966,-0.8191,0.9641,ns
+Maximum speed (mm s-1),TCS - MP,TCS,MP,6.38,24.2755,-41.1999,53.9599,0.2628,0.9998,ns
+Maximum speed (mm s-1),MP+TCS - MP,MP+TCS,MP,-15.29,24.2755,-62.8699,32.2899,-0.6299,0.9888,ns
+Maximum speed (mm s-1),MP+TCS - TCS,MP+TCS,TCS,-21.67,24.2755,-69.2499,25.9099,-0.8927,0.9484,ns

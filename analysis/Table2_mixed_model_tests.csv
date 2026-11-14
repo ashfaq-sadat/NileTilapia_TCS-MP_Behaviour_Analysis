@@ -1,0 +1,8 @@
+endpoint,model,LR_chi2,df,p_value,significance,tank_variance,residual_variance,ICC_tank,residual_Shapiro_p,n_larvae,n_tanks
+Total distance (mm),Mixed model,11.2031,5,0.0475,*,47377.3368,1134879.0375,0.0401,0.199,36,18
+Mean speed (mm s-1),Mixed model,12.0437,5,0.0342,*,2.1332,31.9856,0.0625,0.1825,36,18
+Time active (%),Mixed model,15.9838,5,0.0069,**,0.0,219.0562,0.0,0.0048,36,18
+Movement bouts (n),Mixed model,20.4527,5,0.001,**,0.0,1720.0611,0.0,0.0053,36,18
+Time in outer zone (%),Mixed model,4.5553,5,0.4725,ns,39.7622,116.5289,0.2544,0.08,36,18
+Speed when active (mm s-1),Mixed model,9.753,5,0.0825,ns,2.1829,27.1712,0.0744,0.5519,36,18
+Maximum speed (mm s-1),Mixed model,3.2857,5,0.656,ns,0.0,1767.8926,0.0,0.0022,36,18
