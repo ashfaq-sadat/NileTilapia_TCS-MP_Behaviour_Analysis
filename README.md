@@ -4,7 +4,8 @@ Video recordings, tracking code, statistical analysis and output files for the l
 behaviour assay of a toxicity study on Nile tilapia (*Oreochromis niloticus*) larvae exposed
 to triclosan (TCS), polyethylene microplastics (PE-MPs) and their combination.
 
-This repository is the supplementary material for the behaviour part of the study. It holds
+This repository is the supplementary material for the methods article describing the recording
+and tracking pipeline (submitted to *MethodsX*; see *Citation*). It holds
 everything needed to go from the raw videos to the tables and figures: six recordings, two
 Python scripts, and the files those scripts produced.
 
@@ -198,9 +199,16 @@ Check the `_wells.jpg` and `_tracks.jpg` images before trusting the numbers.
 
 ## Citation
 
-If you use the code or the data, please cite this repository (see `CITATION.cff`, or the
-"Cite this repository" button on GitHub). The reference to the accompanying article and its
-DOI will be added here when the article is published.
+This repository accompanies the following methods article, which has been submitted to
+*MethodsX*:
+
+> Sadat, M.A., Roy Kanok, N.J., Sumon, K.A. A low-cost overhead recording and open-source
+> tracking pipeline for quantifying free-swimming behaviour in tilapia larvae. *MethodsX*
+> (submitted).
+
+If you use the code or the data, please cite that article together with this repository (see
+`CITATION.cff`, or the "Cite this repository" button on GitHub). The volume, article number
+and DOI will be added here once the article is published.
 
 ## Licence
 

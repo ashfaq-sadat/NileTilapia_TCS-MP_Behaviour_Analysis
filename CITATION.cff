@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: >-
-  If you use this code or data, please cite this repository. The citation of
-  the accompanying article will be added here once it is published.
+  If you use this code or data, please cite the accompanying methods article
+  (submitted to MethodsX) together with this repository.
 type: software
 title: "Behaviour analysis of Nile tilapia larvae exposed to triclosan and polyethylene microplastics: videos, tracking code and statistics"
 authors:
@@ -19,3 +19,16 @@ keywords:
   - microplastics
   - video tracking
   - OpenCV
+preferred-citation:
+  type: article
+  status: submitted
+  title: "A low-cost overhead recording and open-source tracking pipeline for quantifying free-swimming behaviour in tilapia larvae"
+  authors:
+    - family-names: Sadat
+      given-names: Md. Ashfaq
+    - family-names: Roy Kanok
+      given-names: Nayan Jyoti
+    - family-names: Sumon
+      given-names: Kizar Ahmed
+  journal: MethodsX
+  year: 2026
