@@ -72,13 +72,12 @@ PLANNED_CONTRASTS = [
 P_ADJUST = "holm"             # multiplicity correction across the planned contrasts of each endpoint
 SHOW_NS_BRACKETS = False      # True = also draw brackets for non-significant contrasts
 
-# Box/bar fill colours: greys for the control and solvent groups, colour for exposures.
-# The palette stays distinguishable in greyscale print and for colour-blind readers.
-TREATMENT_COLOURS = {"Control": "#d9d9d9", "DMSO": "#bdbdbd", "Tween80": "#969696",
-                     "MP": "#92c5de", "TCS": "#f4a582", "MP+TCS": "#b2abd2", "TCS+MP": "#b2abd2"}
-# Darker versions for lines and markers in the time-course figure.
-TREATMENT_LINE_COLOURS = {"Control": "#252525", "DMSO": "#636363", "Tween80": "#969696",
-                          "MP": "#2166ac", "TCS": "#b2182b", "MP+TCS": "#542788", "TCS+MP": "#542788"}
+# Colours match the other figures in the companion manuscript: greens for the control and
+# solvent groups, then blue (MP), purple (TCS) and red (MP+TCS).
+TREATMENT_COLOURS = {"Control": "#4caf50", "Tween80": "#2e7d32", "DMSO": "#2e9f32",
+                     "MP": "#337b9f", "TCS": "#8a5d86", "MP+TCS": "#b71c1c", "TCS+MP": "#b71c1c"}
+# Lines and markers in the time-course figure use the same colours.
+TREATMENT_LINE_COLOURS = dict(TREATMENT_COLOURS)
 TREATMENT_MARKERS = {"Control": "o", "DMSO": "s", "Tween80": "D", "MP": "^",
                      "TCS": "v", "MP+TCS": "P", "TCS+MP": "P"}
 
@@ -100,8 +99,9 @@ SINGLE_COLUMN_MM = 85        # typical single-column width (Elsevier, Springer, 
 DOUBLE_COLUMN_MM = 174       # typical full-page width
 FIG_DPI = 600                # raster resolution for PNG and TIFF
 SAVE_FORMATS = ("png", "tif", "pdf")
-POINT_COLOUR = "#252525"
-POINT_ALPHA = 0.45           # transparency of the individual-larva points
+POINT_COLOUR = "#1a1a1a"
+POINT_EDGE = "white"         # thin white rim keeps points visible on dark bars
+POINT_ALPHA = 0.6            # transparency of the individual-larva points
 POINT_SIZE = 9
 LETTER_POSITION = "top"     # "top" = one aligned row at the top of each panel; "bar" = above each bar
 LETTER_GAP_PT = 1.5          # gap above each box/bar when LETTER_POSITION = "bar", in points
@@ -320,8 +320,8 @@ def jitter_points(ax, df, ep, order):
         v = df.loc[df["treatment"] == t, ep].dropna().values
         if len(v):
             x = i + rng.uniform(-0.13, 0.13, len(v))
-            ax.scatter(x, v, s=POINT_SIZE, color=POINT_COLOUR, alpha=POINT_ALPHA,
-                       linewidths=0, zorder=3)
+            ax.scatter(x, v, s=POINT_SIZE, facecolor=POINT_COLOUR, edgecolor=POINT_EDGE,
+                       linewidths=0.4, alpha=POINT_ALPHA, zorder=3)
 
 
 def add_brackets(ax, order, contrasts, tops):
