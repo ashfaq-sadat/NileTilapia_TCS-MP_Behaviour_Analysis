@@ -1,0 +1,21 @@
+Data licence
+============
+
+The MIT License in the file LICENSE applies to the Python code in this
+repository (the .py files).
+
+Everything else is data and is licensed under the Creative Commons
+Attribution 4.0 International licence (CC BY 4.0):
+
+  - the video recordings in videos/
+  - the tracking output in results/
+  - the tables and figures in analysis/
+
+Copyright (c) 2026 Md. Ashfaq Sadat
+
+You may copy, redistribute and adapt this material for any purpose, provided
+you give appropriate credit, link to the licence and indicate whether changes
+were made.
+
+Full licence text: https://creativecommons.org/licenses/by/4.0/legalcode
+Summary:           https://creativecommons.org/licenses/by/4.0/

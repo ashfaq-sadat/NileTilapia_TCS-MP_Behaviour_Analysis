@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: >-
+  If you use this code or data, please cite this repository. The citation of
+  the accompanying article will be added here once it is published.
+type: software
+title: "Behaviour analysis of Nile tilapia larvae exposed to triclosan and polyethylene microplastics: videos, tracking code and statistics"
+authors:
+  - family-names: Sadat
+    given-names: Md. Ashfaq
+    affiliation: "Department of Fisheries Management, Bangladesh Agricultural University, Mymensingh, Bangladesh"
+repository-code: "https://github.com/ashfaq-sadat/NileTilapia_TCS-MP_Behaviour_Analysis"
+license: MIT
+version: "1.0.0"
+date-released: "2026-11-15"
+keywords:
+  - Oreochromis niloticus
+  - larval behaviour
+  - triclosan
+  - microplastics
+  - video tracking
+  - OpenCV

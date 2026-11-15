@@ -8,7 +8,8 @@ Reads the files written by larval_tracker.py:
 Writes to analysis/:
     Table1_descriptive.csv          mean, SD, SE and n per treatment for every endpoint
     Table2_mixed_model_tests.csv    treatment effect per endpoint (likelihood-ratio test)
-    Table3_pairwise_tukey.csv       all pairwise comparisons, Tukey-adjusted
+    Table3_planned_contrasts.csv    planned contrasts against each vehicle, Holm-adjusted
+                                    (Table3_pairwise_tukey.csv if COMPARISONS = "tukey")
     Tables.xlsx                     the three tables in one workbook (if openpyxl is installed)
     Fig_box_<endpoint>              box plot (median, IQR, 1.5 x IQR whiskers) + every larva
     Fig_bar_<endpoint>              mean +/- SE bar chart + every larva
@@ -19,8 +20,10 @@ Each figure is saved as PNG and LZW-compressed TIFF (600 dpi) and as vector PDF.
 Model, for each endpoint:
     endpoint ~ treatment + (1 | replicate tank)
 The two larvae from the same replicate tank share a random intercept, so the
-replicate tank is the experimental unit. Letters above the bars come from the
-Tukey-adjusted pairwise tests: treatments sharing a letter do not differ (p >= 0.05).
+replicate tank is the experimental unit. With COMPARISONS = "planned" (default), each
+exposure is compared with its vehicle and the figures show brackets with asterisks for
+significant contrasts (* p < 0.05, ** p < 0.01, *** p < 0.001, Holm-adjusted).
+With COMPARISONS = "tukey", all pairs are tested and the figures show compact letters.
 
 Requirements:  pip install pandas numpy scipy statsmodels matplotlib openpyxl
 Run:           python larval_analysis.py
@@ -41,6 +44,7 @@ import numpy as np
 import pandas as pd
 import statsmodels.formula.api as smf
 from scipy import stats
+from statsmodels.stats.multitest import multipletests
 
 # ---------------------------------------------------------------- settings
 SUMMARY_FILE = os.path.join("results", "larva_summary.csv")
@@ -48,16 +52,32 @@ PER_MINUTE_FILE = os.path.join("results", "larva_per_minute.csv")
 OUTPUT_FOLDER = "analysis"
 
 # Treatments are drawn in this order; names must match the video file names.
-# Both spellings of the combined group are accepted.
-TREATMENT_ORDER = ["Control", "DMSO", "Tween80", "MP", "TCS", "MP+TCS", "TCS+MP"]
+TREATMENT_ORDER = ["Control", "DMSO", "Tween80", "MP", "TCS", "MP+TCS"]
+TREATMENT_ALIASES = {"TCS+MP": "MP+TCS"}   # other spellings mapped to the names above
 
-# Box/bar fill colours: greys for the control and solvent groups, colour for exposures.
-# The palette stays distinguishable in greyscale print and for colour-blind readers.
-TREATMENT_COLOURS = {"Control": "#d9d9d9", "DMSO": "#bdbdbd", "Tween80": "#969696",
-                     "MP": "#92c5de", "TCS": "#f4a582", "MP+TCS": "#b2abd2", "TCS+MP": "#b2abd2"}
-# Darker versions for lines and markers in the time-course figure.
-TREATMENT_LINE_COLOURS = {"Control": "#252525", "DMSO": "#636363", "Tween80": "#969696",
-                          "MP": "#2166ac", "TCS": "#b2182b", "MP+TCS": "#542788", "TCS+MP": "#542788"}
+# Comparisons. "planned" tests only the contrasts listed below; "tukey" tests every pair
+# and labels the figures with compact letters.
+COMPARISONS = "planned"
+# (treatment, reference). Each exposure is compared with the vehicle it was delivered in:
+# TCS in DMSO, PE-MP suspended with Tween80, MP+TCS containing both vehicles.
+PLANNED_CONTRASTS = [
+    ("DMSO", "Control"),      # solvent check
+    ("Tween80", "Control"),   # solvent (MP suspension agent) check
+    ("TCS", "DMSO"),          # TCS against its vehicle
+    ("MP", "Tween80"),        # PE-MP against its vehicle
+    ("MP+TCS", "TCS"),        # does adding MP change the TCS effect?
+    ("MP+TCS", "MP"),         # does adding TCS change the MP effect?
+    ("MP+TCS", "Control"),    # combined exposure against untreated larvae
+]
+P_ADJUST = "holm"             # multiplicity correction across the planned contrasts of each endpoint
+SHOW_NS_BRACKETS = False      # True = also draw brackets for non-significant contrasts
+
+# Colours match the other figures in the companion manuscript: greens for the control and
+# solvent groups, then blue (MP), purple (TCS) and red (MP+TCS).
+TREATMENT_COLOURS = {"Control": "#4caf50", "Tween80": "#2e7d32", "DMSO": "#2e9f32",
+                     "MP": "#337b9f", "TCS": "#8a5d86", "MP+TCS": "#b71c1c", "TCS+MP": "#b71c1c"}
+# Lines and markers in the time-course figure use the same colours.
+TREATMENT_LINE_COLOURS = dict(TREATMENT_COLOURS)
 TREATMENT_MARKERS = {"Control": "o", "DMSO": "s", "Tween80": "D", "MP": "^",
                      "TCS": "v", "MP+TCS": "P", "TCS+MP": "P"}
 
@@ -79,8 +99,9 @@ SINGLE_COLUMN_MM = 85        # typical single-column width (Elsevier, Springer, 
 DOUBLE_COLUMN_MM = 174       # typical full-page width
 FIG_DPI = 600                # raster resolution for PNG and TIFF
 SAVE_FORMATS = ("png", "tif", "pdf")
-POINT_COLOUR = "#252525"
-POINT_ALPHA = 0.45           # transparency of the individual-larva points
+POINT_COLOUR = "#1a1a1a"
+POINT_EDGE = "white"         # thin white rim keeps points visible on dark bars
+POINT_ALPHA = 0.6            # transparency of the individual-larva points
 POINT_SIZE = 9
 LETTER_POSITION = "top"     # "top" = one aligned row at the top of each panel; "bar" = above each bar
 LETTER_GAP_PT = 1.5          # gap above each box/bar when LETTER_POSITION = "bar", in points
@@ -104,6 +125,7 @@ plt.rcParams.update({
 
 def load_summary():
     df = pd.read_csv(SUMMARY_FILE)
+    df["treatment"] = df["treatment"].replace(TREATMENT_ALIASES)
     present = [t for t in TREATMENT_ORDER if t in set(df["treatment"])]
     extra = sorted(set(df["treatment"]) - set(TREATMENT_ORDER))
     if extra:
@@ -187,8 +209,8 @@ def treatment_test(df, ep):
     }
 
 
-def pairwise_tukey(df, ep, order):
-    """All pairwise treatment differences from the REML mixed model, Tukey-adjusted."""
+def contrast_tools(df, ep):
+    """REML fit plus a helper giving the model mean vector of any treatment."""
     res, data = fit_mixed(df, ep, reml=True)
     levels = list(data["treatment"].cat.categories)
     fe = res.fe_params
@@ -203,6 +225,40 @@ def pairwise_tukey(df, ep, order):
             v[names.index(term)] = 1
         return v
 
+    return levels, fe, cov, vec
+
+
+def planned_comparisons(df, ep):
+    """Planned contrasts from the REML mixed model, Holm-adjusted within each endpoint."""
+    levels, fe, cov, vec = contrast_tools(df, ep)
+    rows = []
+    for g, ref in PLANNED_CONTRASTS:
+        if g not in levels or ref not in levels:
+            print(f"Note: contrast {g} vs {ref} skipped ({ep}): treatment not in the data.")
+            continue
+        c = vec(g) - vec(ref)
+        est = float(c @ fe.values)
+        se = float(np.sqrt(c @ cov.values @ c))
+        z = est / se if se > 0 else np.nan
+        ref_mean = float(vec(ref) @ fe.values)
+        rows.append({
+            "endpoint": ENDPOINTS[ep].replace("$^{-1}$", "-1"),
+            "contrast": f"{g} vs {ref}", "group": g, "reference": ref,
+            "difference": est, "SE": se,
+            "CI95_low": est - 1.96 * se, "CI95_high": est + 1.96 * se,
+            "pct_change": 100 * est / ref_mean if ref_mean else np.nan,
+            "z": z, "p_raw": 2 * stats.norm.sf(abs(z)),
+        })
+    out = pd.DataFrame(rows)
+    if len(out):
+        out["p_adj"] = multipletests(out["p_raw"], method=P_ADJUST)[1]
+        out["significance"] = out["p_adj"].apply(stars)
+    return out
+
+
+def pairwise_tukey(df, ep, order):
+    """All pairwise treatment differences from the REML mixed model, Tukey-adjusted."""
+    levels, fe, cov, vec = contrast_tools(df, ep)
     k = len(levels)
     rows = []
     for a, b in itertools.combinations(levels, 2):
@@ -264,13 +320,54 @@ def jitter_points(ax, df, ep, order):
         v = df.loc[df["treatment"] == t, ep].dropna().values
         if len(v):
             x = i + rng.uniform(-0.13, 0.13, len(v))
-            ax.scatter(x, v, s=POINT_SIZE, color=POINT_COLOUR, alpha=POINT_ALPHA,
-                       linewidths=0, zorder=3)
+            ax.scatter(x, v, s=POINT_SIZE, facecolor=POINT_COLOUR, edgecolor=POINT_EDGE,
+                       linewidths=0.4, alpha=POINT_ALPHA, zorder=3)
+
+
+def add_brackets(ax, order, contrasts, tops):
+    """Draw a bracket with asterisks for each planned contrast (significant ones only,
+    unless SHOW_NS_BRACKETS). Brackets are stacked without overlapping, and the spacing
+    is set in points so the asterisks never touch the bracket above, whatever the panel size."""
+    rows = [r for r in contrasts.itertuples()
+            if (r.p_adj < ALPHA or SHOW_NS_BRACKETS) and r.group in order and r.reference in order]
+    if not rows:
+        return
+    spans = sorted(((sorted((order.index(r.group), order.index(r.reference))), r.significance)
+                    for r in rows), key=lambda s: (s[0][1] - s[0][0], s[0][0]))
+    levels_used, placed = [], []
+    for (x1, x2), label in spans:
+        level = 0
+        while level < len(levels_used) and any(not (x2 < a or x1 > b) for a, b in levels_used[level]):
+            level += 1
+        if level == len(levels_used):
+            levels_used.append([])
+        levels_used[level].append((x1, x2))
+        placed.append((x1, x2, label, level))
+
+    # vertical layout in points, converted to axis fractions
+    height_pt = ax.get_window_extent().height / ax.figure.dpi * 72
+    level_f, pad_f, tick_f, top_f = 12 / height_pt, 4 / height_pt, 2.5 / height_pt, 9 / height_pt
+    n_levels = len(levels_used)
+    data_f = max(0.45, 1 - pad_f - (n_levels - 1) * level_f - top_f)
+    lo = ax.get_ylim()[0]
+    total = (max(tops) - lo) / data_f
+    ax.set_ylim(lo, lo + total)
+    for x1, x2, label, level in placed:
+        y = lo + total * (data_f + pad_f + level * level_f)
+        t = total * tick_f
+        ax.plot([x1, x1, x2, x2], [y - t, y, y, y - t], color="black", linewidth=0.6, clip_on=False)
+        ax.annotate(label, xy=((x1 + x2) / 2, y), xytext=(0, -1.5 if label != "ns" else 0.5),
+                    textcoords="offset points", ha="center", va="bottom",
+                    fontsize=8 if label != "ns" else 6.5)
 
 
 def add_letters(ax, order, letters, tops):
     """Write the Tukey letters, either in one aligned row at the top of the panel
-    (LETTER_POSITION = "top") or just above each box or bar ("bar")."""
+    (LETTER_POSITION = "top") or just above each box or bar ("bar").
+    A DataFrame of planned contrasts is drawn as brackets instead."""
+    if isinstance(letters, pd.DataFrame):
+        add_brackets(ax, order, letters, tops)
+        return
     shown = [letters.get(t, "") for t in order]
     if HIDE_LETTERS_IF_ALL_SAME and len(set(shown)) <= 1:
         return
@@ -340,6 +437,7 @@ def time_course(order):
     if not os.path.exists(PER_MINUTE_FILE):
         return
     pm = pd.read_csv(PER_MINUTE_FILE)
+    pm["treatment"] = pm["treatment"].replace(TREATMENT_ALIASES)
     eps = ["total_distance_mm", "pct_time_active", "pct_time_outer_zone"]
     fig, axes = plt.subplots(1, 3, figsize=(DOUBLE_COLUMN_MM * MM, 52 * MM))
     offsets = np.linspace(-0.12, 0.12, len(order))   # small dodge so error bars don't overlap
@@ -396,21 +494,26 @@ def main():
         if ep not in df.columns:
             continue
         table2.append(treatment_test(df, ep))
-        pairs, letters = pairwise_tukey(df, ep, order)
+        if COMPARISONS == "planned":
+            pairs = planned_comparisons(df, ep)
+            all_letters[ep] = pairs            # drawn as brackets
+        else:
+            pairs, letters = pairwise_tukey(df, ep, order)
+            all_letters[ep] = letters
         pair_tables.append(pairs)
-        all_letters[ep] = letters
     table2 = pd.DataFrame(table2)
     table3 = pd.concat(pair_tables, ignore_index=True)
 
-    letters_col = [all_letters[ep].get(t, "") for ep in ENDPOINTS for t in order]
-    table1["letters"] = letters_col
+    if COMPARISONS != "planned":
+        table1["letters"] = [all_letters[ep].get(t, "") for ep in ENDPOINTS for t in order]
 
     table1.round(3).to_csv(os.path.join(OUTPUT_FOLDER, "Table1_descriptive.csv"), index=False)
     table2.round(4).to_csv(os.path.join(OUTPUT_FOLDER, "Table2_mixed_model_tests.csv"), index=False)
-    table3.round(4).to_csv(os.path.join(OUTPUT_FOLDER, "Table3_pairwise_tukey.csv"), index=False)
+    t3_name = "Table3_planned_contrasts.csv" if COMPARISONS == "planned" else "Table3_pairwise_tukey.csv"
+    table3.round(4).to_csv(os.path.join(OUTPUT_FOLDER, t3_name), index=False)
     write_excel({"Descriptive": table1.round(3),
                  "Treatment effect": table2.round(4),
-                 "Pairwise Tukey": table3.round(4)})
+                 ("Planned contrasts" if COMPARISONS == "planned" else "Pairwise Tukey"): table3.round(4)})
 
     # single-endpoint figures (single-column width)
     for ep in ENDPOINTS:
